@@ -1,0 +1,81 @@
+{
+	"name": "UsersData",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureDataLakeStorage",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "dbo.users_data.csv",
+				"fileSystem": "bronze"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "id",
+				"type": "String"
+			},
+			{
+				"name": "current_age",
+				"type": "String"
+			},
+			{
+				"name": "retirement_age",
+				"type": "String"
+			},
+			{
+				"name": "birth_year",
+				"type": "String"
+			},
+			{
+				"name": "birth_month",
+				"type": "String"
+			},
+			{
+				"name": "gender",
+				"type": "String"
+			},
+			{
+				"name": "address",
+				"type": "String"
+			},
+			{
+				"name": "latitude",
+				"type": "String"
+			},
+			{
+				"name": "longitude",
+				"type": "String"
+			},
+			{
+				"name": "per_capita_income",
+				"type": "String"
+			},
+			{
+				"name": "yearly_income",
+				"type": "String"
+			},
+			{
+				"name": "total_debt",
+				"type": "String"
+			},
+			{
+				"name": "credit_score",
+				"type": "String"
+			},
+			{
+				"name": "num_credit_cards",
+				"type": "String"
+			}
+		]
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

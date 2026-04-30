@@ -1,0 +1,28 @@
+{
+	"name": "SqlServer1",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"annotations": [],
+		"type": "SqlServer",
+		"typeProperties": {
+			"server": "LAPTOP-DUKAML1O",
+			"database": "bankingdata",
+			"encrypt": "optional",
+			"trustServerCertificate": true,
+			"authenticationType": "SQL",
+			"userName": "sid",
+			"password": {
+				"type": "AzureKeyVaultSecret",
+				"store": {
+					"referenceName": "AzureKeyVault1",
+					"type": "LinkedServiceReference"
+				},
+				"secretName": "dbsid1"
+			}
+		},
+		"connectVia": {
+			"referenceName": "integrationRuntime",
+			"type": "IntegrationRuntimeReference"
+		}
+	}
+}

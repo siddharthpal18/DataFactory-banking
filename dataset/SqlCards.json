@@ -1,0 +1,78 @@
+{
+	"name": "SqlCards",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "SqlServer1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "SqlServerTable",
+		"schema": [
+			{
+				"name": "id",
+				"type": "smallint",
+				"precision": 5
+			},
+			{
+				"name": "client_id",
+				"type": "smallint",
+				"precision": 5
+			},
+			{
+				"name": "card_brand",
+				"type": "nvarchar"
+			},
+			{
+				"name": "card_type",
+				"type": "nvarchar"
+			},
+			{
+				"name": "card_number",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "expires",
+				"type": "nvarchar"
+			},
+			{
+				"name": "cvv",
+				"type": "smallint",
+				"precision": 5
+			},
+			{
+				"name": "has_chip",
+				"type": "bit"
+			},
+			{
+				"name": "num_cards_issued",
+				"type": "tinyint",
+				"precision": 3
+			},
+			{
+				"name": "credit_limit",
+				"type": "money",
+				"precision": 19,
+				"scale": 4
+			},
+			{
+				"name": "acct_open_date",
+				"type": "nvarchar"
+			},
+			{
+				"name": "year_pin_last_changed",
+				"type": "smallint",
+				"precision": 5
+			},
+			{
+				"name": "card_on_dark_web",
+				"type": "nvarchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "cards_data"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

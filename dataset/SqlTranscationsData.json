@@ -1,0 +1,75 @@
+{
+	"name": "SqlTranscationsData",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "SqlServer1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "SqlServerTable",
+		"schema": [
+			{
+				"name": "id",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "date",
+				"type": "datetime2",
+				"scale": 7
+			},
+			{
+				"name": "client_id",
+				"type": "smallint",
+				"precision": 5
+			},
+			{
+				"name": "card_id",
+				"type": "smallint",
+				"precision": 5
+			},
+			{
+				"name": "amount",
+				"type": "money",
+				"precision": 19,
+				"scale": 4
+			},
+			{
+				"name": "use_chip",
+				"type": "nvarchar"
+			},
+			{
+				"name": "merchant_id",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "merchant_city",
+				"type": "nvarchar"
+			},
+			{
+				"name": "merchant_state",
+				"type": "nvarchar"
+			},
+			{
+				"name": "zip",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "mcc",
+				"type": "smallint",
+				"precision": 5
+			},
+			{
+				"name": "errors",
+				"type": "nvarchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "transactions_data"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

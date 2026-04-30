@@ -1,0 +1,107 @@
+{
+	"name": "BankingCleanedData",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureDataLakeStorage",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "part-merged.snappy.parquet",
+				"folderPath": "banking-dataset-cleaned",
+				"fileSystem": "silver"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": [
+			{
+				"name": "id",
+				"type": "UTF8"
+			},
+			{
+				"name": "current_age",
+				"type": "UTF8"
+			},
+			{
+				"name": "gender",
+				"type": "UTF8"
+			},
+			{
+				"name": "yearly_income",
+				"type": "UTF8"
+			},
+			{
+				"name": "total_debt",
+				"type": "UTF8"
+			},
+			{
+				"name": "credit_score",
+				"type": "UTF8"
+			},
+			{
+				"name": "num_credit_cards",
+				"type": "UTF8"
+			},
+			{
+				"name": "client_id",
+				"type": "UTF8"
+			},
+			{
+				"name": "card_brand",
+				"type": "UTF8"
+			},
+			{
+				"name": "card_type",
+				"type": "UTF8"
+			},
+			{
+				"name": "expires",
+				"type": "UTF8"
+			},
+			{
+				"name": "has_chip",
+				"type": "UTF8"
+			},
+			{
+				"name": "credit_limit",
+				"type": "UTF8"
+			},
+			{
+				"name": "card_on_dark_web",
+				"type": "UTF8"
+			},
+			{
+				"name": "date",
+				"type": "UTF8"
+			},
+			{
+				"name": "amount",
+				"type": "UTF8"
+			},
+			{
+				"name": "use_chip",
+				"type": "UTF8"
+			},
+			{
+				"name": "merchant_city",
+				"type": "UTF8"
+			},
+			{
+				"name": "merchant_state",
+				"type": "UTF8"
+			},
+			{
+				"name": "mcc",
+				"type": "UTF8"
+			},
+			{
+				"name": "errors",
+				"type": "UTF8"
+			}
+		]
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

@@ -1,0 +1,74 @@
+{
+	"name": "CleanCardsParq",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureDataLakeStorage",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"folderPath": "cleaned_cardsdata",
+				"fileSystem": "silver"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": [
+			{
+				"name": "id",
+				"type": "UTF8"
+			},
+			{
+				"name": "client_id",
+				"type": "UTF8"
+			},
+			{
+				"name": "card_brand",
+				"type": "UTF8"
+			},
+			{
+				"name": "card_type",
+				"type": "UTF8"
+			},
+			{
+				"name": "card_number",
+				"type": "UTF8"
+			},
+			{
+				"name": "expires",
+				"type": "UTF8"
+			},
+			{
+				"name": "cvv",
+				"type": "UTF8"
+			},
+			{
+				"name": "has_chip",
+				"type": "UTF8"
+			},
+			{
+				"name": "num_cards_issued",
+				"type": "UTF8"
+			},
+			{
+				"name": "credit_limit",
+				"type": "UTF8"
+			},
+			{
+				"name": "acct_open_date",
+				"type": "UTF8"
+			},
+			{
+				"name": "year_pin_last_changed",
+				"type": "UTF8"
+			},
+			{
+				"name": "card_on_dark_web",
+				"type": "UTF8"
+			}
+		]
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

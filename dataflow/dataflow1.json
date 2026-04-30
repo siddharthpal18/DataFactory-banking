@@ -1,0 +1,177 @@
+{
+	"name": "dataflow1",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "UsersData",
+						"type": "DatasetReference"
+					},
+					"name": "UsersData",
+					"description": "Import data from UsersData"
+				},
+				{
+					"dataset": {
+						"referenceName": "UsersCardsData",
+						"type": "DatasetReference"
+					},
+					"name": "CardsDataSource"
+				},
+				{
+					"dataset": {
+						"referenceName": "UsersTranscationData",
+						"type": "DatasetReference"
+					},
+					"name": "TranscationData"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "BankingCleanedParquetData",
+						"type": "DatasetReference"
+					},
+					"name": "sink"
+				}
+			],
+			"transformations": [
+				{
+					"name": "UsersCards"
+				},
+				{
+					"name": "Transcationjoin"
+				},
+				{
+					"name": "select1"
+				},
+				{
+					"name": "RemoveNegativeAmounts"
+				},
+				{
+					"name": "RemoveInvalidAge"
+				},
+				{
+					"name": "derivedColumn1",
+					"description": "In error column change to No error values if its Null else keep it to its original values"
+				},
+				{
+					"name": "derivedColumn2",
+					"description": "In Merchant State if its Null then its Online payment else keep its original value"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          id as string,",
+				"          current_age as string,",
+				"          retirement_age as string,",
+				"          birth_year as string,",
+				"          birth_month as string,",
+				"          gender as string,",
+				"          address as string,",
+				"          latitude as string,",
+				"          longitude as string,",
+				"          per_capita_income as string,",
+				"          yearly_income as string,",
+				"          total_debt as string,",
+				"          credit_score as string,",
+				"          num_credit_cards as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> UsersData",
+				"source(output(",
+				"          id as string,",
+				"          client_id as string,",
+				"          card_brand as string,",
+				"          card_type as string,",
+				"          card_number as string,",
+				"          expires as string,",
+				"          cvv as string,",
+				"          has_chip as string,",
+				"          num_cards_issued as string,",
+				"          credit_limit as string,",
+				"          acct_open_date as string,",
+				"          year_pin_last_changed as string,",
+				"          card_on_dark_web as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> CardsDataSource",
+				"source(output(",
+				"          id as string,",
+				"          date as string,",
+				"          client_id as string,",
+				"          card_id as string,",
+				"          amount as string,",
+				"          use_chip as string,",
+				"          merchant_id as string,",
+				"          merchant_city as string,",
+				"          merchant_state as string,",
+				"          zip as string,",
+				"          mcc as string,",
+				"          errors as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> TranscationData",
+				"UsersData, CardsDataSource join(UsersData@id == client_id,",
+				"     joinType:'left',",
+				"     matchType:'exact',",
+				"     ignoreSpaces: false,",
+				"     broadcast: 'auto')~> UsersCards",
+				"UsersCards, TranscationData join(CardsDataSource@id == TranscationData@client_id,",
+				"     joinType:'left',",
+				"     matchType:'exact',",
+				"     ignoreSpaces: false,",
+				"     broadcast: 'auto')~> Transcationjoin",
+				"Transcationjoin select(mapColumn(",
+				"          id = UsersData@id,",
+				"          current_age,",
+				"          gender,",
+				"          yearly_income,",
+				"          total_debt,",
+				"          credit_score,",
+				"          num_credit_cards,",
+				"          id = CardsDataSource@id,",
+				"          client_id = CardsDataSource@client_id,",
+				"          card_brand,",
+				"          card_type,",
+				"          expires,",
+				"          has_chip,",
+				"          credit_limit,",
+				"          card_on_dark_web,",
+				"          id = TranscationData@id,",
+				"          date,",
+				"          client_id = TranscationData@client_id,",
+				"          amount,",
+				"          use_chip,",
+				"          merchant_city,",
+				"          merchant_state,",
+				"          mcc,",
+				"          errors",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select1",
+				"select1 filter(toInteger(amount)>=0) ~> RemoveNegativeAmounts",
+				"RemoveNegativeAmounts filter(toInteger(current_age)<=100) ~> RemoveInvalidAge",
+				"RemoveInvalidAge derive(errors = iif(\r",
+				"    isNull(errors),\r",
+				"    'No Error',\r",
+				"    errors\r",
+				")) ~> derivedColumn1",
+				"derivedColumn1 derive(merchant_state = iif(isNull(merchant_state), 'Online', merchant_state)) ~> derivedColumn2",
+				"derivedColumn2 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     format: 'parquet',",
+				"     umask: 0022,",
+				"     preCommands: [],",
+				"     postCommands: [],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     partitionBy('hash', 1)) ~> sink"
+			]
+		}
+	}
+}

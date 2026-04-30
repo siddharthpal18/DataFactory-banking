@@ -1,0 +1,78 @@
+{
+	"name": "Cleanedusers",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureDataLakeStorage",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"folderPath": "cleaned_users",
+				"fileSystem": "silver"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": [
+			{
+				"name": "id",
+				"type": "UTF8"
+			},
+			{
+				"name": "current_age",
+				"type": "UTF8"
+			},
+			{
+				"name": "retirement_age",
+				"type": "UTF8"
+			},
+			{
+				"name": "birth_year",
+				"type": "UTF8"
+			},
+			{
+				"name": "birth_month",
+				"type": "UTF8"
+			},
+			{
+				"name": "gender",
+				"type": "UTF8"
+			},
+			{
+				"name": "address",
+				"type": "UTF8"
+			},
+			{
+				"name": "latitude",
+				"type": "UTF8"
+			},
+			{
+				"name": "longitude",
+				"type": "UTF8"
+			},
+			{
+				"name": "per_capita_income",
+				"type": "UTF8"
+			},
+			{
+				"name": "yearly_income",
+				"type": "UTF8"
+			},
+			{
+				"name": "total_debt",
+				"type": "UTF8"
+			},
+			{
+				"name": "credit_score",
+				"type": "UTF8"
+			},
+			{
+				"name": "num_credit_cards",
+				"type": "UTF8"
+			}
+		]
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

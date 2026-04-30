@@ -1,0 +1,159 @@
+{
+	"name": "dataflow3",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "Cleanedusers",
+						"type": "DatasetReference"
+					},
+					"name": "Cleanusers"
+				},
+				{
+					"dataset": {
+						"referenceName": "CleanCardsParq",
+						"type": "DatasetReference"
+					},
+					"name": "CleanCards"
+				},
+				{
+					"dataset": {
+						"referenceName": "CleanTransc",
+						"type": "DatasetReference"
+					},
+					"name": "CleanTranscation"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "GoldSink",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				}
+			],
+			"transformations": [
+				{
+					"name": "usercardsjoin"
+				},
+				{
+					"name": "alljoin"
+				},
+				{
+					"name": "select"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          id as string,",
+				"          current_age as string,",
+				"          retirement_age as string,",
+				"          birth_year as string,",
+				"          birth_month as string,",
+				"          gender as string,",
+				"          address as string,",
+				"          latitude as string,",
+				"          longitude as string,",
+				"          per_capita_income as string,",
+				"          yearly_income as string,",
+				"          total_debt as string,",
+				"          credit_score as string,",
+				"          num_credit_cards as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false,",
+				"     format: 'parquet') ~> Cleanusers",
+				"source(output(",
+				"          id as string,",
+				"          client_id as string,",
+				"          card_brand as string,",
+				"          card_type as string,",
+				"          card_number as string,",
+				"          expires as string,",
+				"          cvv as string,",
+				"          has_chip as string,",
+				"          num_cards_issued as string,",
+				"          credit_limit as string,",
+				"          acct_open_date as string,",
+				"          year_pin_last_changed as string,",
+				"          card_on_dark_web as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false,",
+				"     format: 'parquet') ~> CleanCards",
+				"source(output(",
+				"          id as string,",
+				"          date as string,",
+				"          client_id as string,",
+				"          card_id as string,",
+				"          amount as string,",
+				"          use_chip as string,",
+				"          merchant_id as string,",
+				"          merchant_city as string,",
+				"          merchant_state as string,",
+				"          zip as string,",
+				"          mcc as string,",
+				"          errors as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false,",
+				"     format: 'parquet') ~> CleanTranscation",
+				"Cleanusers, CleanCards join(Cleanusers@id == client_id,",
+				"     joinType:'left',",
+				"     matchType:'exact',",
+				"     ignoreSpaces: false,",
+				"     broadcast: 'auto')~> usercardsjoin",
+				"usercardsjoin, CleanTranscation join(CleanCards@id == card_id,",
+				"     joinType:'left',",
+				"     matchType:'exact',",
+				"     ignoreSpaces: false,",
+				"     broadcast: 'auto')~> alljoin",
+				"alljoin select(mapColumn(",
+				"          id = Cleanusers@id,",
+				"          current_age,",
+				"          gender,",
+				"          yearly_income,",
+				"          total_debt,",
+				"          credit_score,",
+				"          num_credit_cards,",
+				"          id = CleanCards@id,",
+				"          client_id = CleanCards@client_id,",
+				"          card_brand,",
+				"          card_type,",
+				"          has_chip,",
+				"          num_cards_issued,",
+				"          credit_limit,",
+				"          card_on_dark_web,",
+				"          id = CleanTranscation@id,",
+				"          date,",
+				"          client_id = CleanTranscation@client_id,",
+				"          card_id,",
+				"          amount,",
+				"          use_chip,",
+				"          merchant_city,",
+				"          merchant_state,",
+				"          mcc,",
+				"          errors",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select",
+				"select sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError') ~> sink1"
+			]
+		}
+	}
+}

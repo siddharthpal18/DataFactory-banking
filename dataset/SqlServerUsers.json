@@ -1,0 +1,89 @@
+{
+	"name": "SqlServerUsers",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "SqlServer1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "SqlServerTable",
+		"schema": [
+			{
+				"name": "id",
+				"type": "smallint",
+				"precision": 5
+			},
+			{
+				"name": "current_age",
+				"type": "tinyint",
+				"precision": 3
+			},
+			{
+				"name": "retirement_age",
+				"type": "tinyint",
+				"precision": 3
+			},
+			{
+				"name": "birth_year",
+				"type": "smallint",
+				"precision": 5
+			},
+			{
+				"name": "birth_month",
+				"type": "tinyint",
+				"precision": 3
+			},
+			{
+				"name": "gender",
+				"type": "nvarchar"
+			},
+			{
+				"name": "address",
+				"type": "nvarchar"
+			},
+			{
+				"name": "latitude",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "longitude",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "per_capita_income",
+				"type": "money",
+				"precision": 19,
+				"scale": 4
+			},
+			{
+				"name": "yearly_income",
+				"type": "money",
+				"precision": 19,
+				"scale": 4
+			},
+			{
+				"name": "total_debt",
+				"type": "money",
+				"precision": 19,
+				"scale": 4
+			},
+			{
+				"name": "credit_score",
+				"type": "smallint",
+				"precision": 5
+			},
+			{
+				"name": "num_credit_cards",
+				"type": "tinyint",
+				"precision": 3
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "users_data"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

@@ -1,0 +1,77 @@
+{
+	"name": "cardsData",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureDataLakeStorage",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "dbo.cards_data.csv",
+				"fileSystem": "bronze"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "id",
+				"type": "String"
+			},
+			{
+				"name": "client_id",
+				"type": "String"
+			},
+			{
+				"name": "card_brand",
+				"type": "String"
+			},
+			{
+				"name": "card_type",
+				"type": "String"
+			},
+			{
+				"name": "card_number",
+				"type": "String"
+			},
+			{
+				"name": "expires",
+				"type": "String"
+			},
+			{
+				"name": "cvv",
+				"type": "String"
+			},
+			{
+				"name": "has_chip",
+				"type": "String"
+			},
+			{
+				"name": "num_cards_issued",
+				"type": "String"
+			},
+			{
+				"name": "credit_limit",
+				"type": "String"
+			},
+			{
+				"name": "acct_open_date",
+				"type": "String"
+			},
+			{
+				"name": "year_pin_last_changed",
+				"type": "String"
+			},
+			{
+				"name": "card_on_dark_web",
+				"type": "String"
+			}
+		]
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

@@ -1,0 +1,17 @@
+{
+	"name": "GoldSink",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSqlDatabase1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "bankingdata"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

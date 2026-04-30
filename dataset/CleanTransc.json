@@ -1,0 +1,70 @@
+{
+	"name": "CleanTransc",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureDataLakeStorage",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"folderPath": "cleaned_transcations",
+				"fileSystem": "silver"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": [
+			{
+				"name": "id",
+				"type": "UTF8"
+			},
+			{
+				"name": "date",
+				"type": "UTF8"
+			},
+			{
+				"name": "client_id",
+				"type": "UTF8"
+			},
+			{
+				"name": "card_id",
+				"type": "UTF8"
+			},
+			{
+				"name": "amount",
+				"type": "UTF8"
+			},
+			{
+				"name": "use_chip",
+				"type": "UTF8"
+			},
+			{
+				"name": "merchant_id",
+				"type": "UTF8"
+			},
+			{
+				"name": "merchant_city",
+				"type": "UTF8"
+			},
+			{
+				"name": "merchant_state",
+				"type": "UTF8"
+			},
+			{
+				"name": "zip",
+				"type": "UTF8"
+			},
+			{
+				"name": "mcc",
+				"type": "UTF8"
+			},
+			{
+				"name": "errors",
+				"type": "UTF8"
+			}
+		]
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

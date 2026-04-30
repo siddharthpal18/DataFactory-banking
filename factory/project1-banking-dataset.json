@@ -1,0 +1,15 @@
+{
+	"name": "project1-banking-dataset",
+	"properties": {
+		"trustModeClaimForMi": {
+			"value": "Enabled",
+			"editable": true
+		}
+	},
+	"location": "canadacentral",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "2704f319-bec3-4865-86b0-cd38a2f88685",
+		"tenantId": "5e4899f3-2232-407c-9357-757830b2ea89"
+	}
+}

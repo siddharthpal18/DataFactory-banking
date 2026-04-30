@@ -1,0 +1,74 @@
+{
+	"name": "TranscData",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureDataLakeStorage",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "dbo.transactions_data.csv",
+				"folderPath": "Transcation_Data",
+				"fileSystem": "bronze"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "id",
+				"type": "String"
+			},
+			{
+				"name": "date",
+				"type": "String"
+			},
+			{
+				"name": "client_id",
+				"type": "String"
+			},
+			{
+				"name": "card_id",
+				"type": "String"
+			},
+			{
+				"name": "amount",
+				"type": "String"
+			},
+			{
+				"name": "use_chip",
+				"type": "String"
+			},
+			{
+				"name": "merchant_id",
+				"type": "String"
+			},
+			{
+				"name": "merchant_city",
+				"type": "String"
+			},
+			{
+				"name": "merchant_state",
+				"type": "String"
+			},
+			{
+				"name": "zip",
+				"type": "String"
+			},
+			{
+				"name": "mcc",
+				"type": "String"
+			},
+			{
+				"name": "errors",
+				"type": "String"
+			}
+		]
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}
