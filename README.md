@@ -26,7 +26,7 @@ Pipeline Stages
 * Purpose: Filter invalid data and standardize formats for downstream integration. 
 * Transformation Engine: ADF Mapping Data Flow (dataflow2). 
 * Key Logic:
-o Filtered users to a valid age range (18�100) and removed null IDs. 
+o Filtered users to a valid age range (18–100) and removed null IDs. 
 o Standardized gender and card_brand to uppercase. 
 o Handled nulls in merchant_state by defaulting to 'Online'. 
 * Storage: Optimized Parquet files in the silver container. 
@@ -52,16 +52,17 @@ Technical Specifications
 
 
 Project Structure
-Plaintext
-??? /Documentation
-?   ??? Step_1_Ingestion_Bronze.md
-?   ??? Step_2_Silver_Layer_Transformation.md
-?   ??? Step_3_Gold_Layer_ Transformation.md
-??? /Code
-?   ??? BronzeIngestion.json        # Ingestion logic
-?   ??? dataflow1_silver.json       # Cleaning script
-?   ??? dataflow2_gold.json         # Join & Load script
-?   ??? MasterPipeline.json         # Full ADF Orchestration
+
+├── /Documentation
+│   ├── Step_1_Bronze_Ingestion.md
+│   ├── Step_2_Silver_Transformation.md
+│   └── Step_3_Gold_Layer_Consolidation.md
+├── /Code
+│   ├── BronzeIngestion.json        # Ingestion logic
+│   ├── dataflow2_silver.json       # Cleaning script
+│   ├── dataflow3_gold.json         # Join & Load script
+│   └── MasterPipeline.json         # Full ADF Orchestration
+└── README.md
 ??? README.md
 
 
