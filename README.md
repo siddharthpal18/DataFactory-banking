@@ -9,6 +9,7 @@ This project demonstrates a high-scale data engineering solution designed to pro
 
 Architecture Diagram
 
+<img width="831" height="281" alt="image" src="https://github.com/user-attachments/assets/ee858c73-0921-4ee9-b823-75554564e37c" />
 
 
 
