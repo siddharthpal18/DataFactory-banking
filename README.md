@@ -53,16 +53,15 @@ Technical Specifications
 
 Project Structure
 
-├── /Documentation
-│   ├── Step_1_Bronze_Ingestion.md
-│   ├── Step_2_Silver_Transformation.md
-│   └── Step_3_Gold_Layer_Consolidation.md
-├── /Code
-│   ├── BronzeIngestion.json        # Ingestion logic
-│   ├── dataflow2_silver.json       # Cleaning script
-│   ├── dataflow3_gold.json         # Join & Load script
-│   └── MasterPipeline.json         # Full ADF Orchestration
-└── README.md
+DataFactory-banking/
+├── dataflow/                 # ADF Mapping Data Flows (transformation logic)
+├── dataset/                  # ADF dataset definitions (CSV, Parquet, SQL sink)
+├── factory/                  # Factory-level resources (global parameters, etc.)
+├── integrationRuntime/       # Managed integration runtime configurations
+├── linkedService/            # Linked services (e.g., to ADLS Gen2, SQL DB)
+├── pipeline/                 # ADF pipeline JSONs (orchestration)
+├── publish_config.json       # ADF publish settings
+└── README.md                 # Project overview & deployment steps
 
 
 
