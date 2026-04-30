@@ -1,0 +1,24 @@
+{
+    "name": "dataflow3",
+    "properties": {
+        "type": "MappingDataFlow",
+        "typeProperties": {
+            "sources": [
+                { "dataset": { "referenceName": "Cleanedusers", "type": "DatasetReference" }, "name": "Cleanusers" },
+                { "dataset": { "referenceName": "CleanCardsParq", "type": "DatasetReference" }, "name": "CleanCards" },
+                { "dataset": { "referenceName": "CleanTransc", "type": "DatasetReference" }, "name": "CleanTranscation" }
+            ],
+            "sinks": [ { "dataset": { "referenceName": "GoldSink", "type": "DatasetReference" }, "name": "sink1" } ],
+            "transformations": [ { "name": "usercardsjoin" }, { "name": "alljoin" }, { "name": "select" } ],
+            "scriptLines": [
+                "source(allowSchemaDrift: true, format: 'parquet') ~> Cleanusers",
+                "source(allowSchemaDrift: true, format: 'parquet') ~> CleanCards",
+                "source(allowSchemaDrift: true, format: 'parquet') ~> CleanTranscation",
+                "Cleanusers, CleanCards join(Cleanusers@id == client_id, joinType:'left') ~> usercardsjoin",
+                "usercardsjoin, CleanTranscation join(CleanCards@id == card_id, joinType:'left') ~> alljoin",
+                "alljoin select(mapColumn(id = Cleanusers@id, current_age, gender, yearly_income, card_brand, card_type, amount, merchant_state, errors), skipDuplicateMapInputs: true, skipDuplicateMapOutputs: true) ~> select",
+                "select sink(allowSchemaDrift: true, format: 'table', insertable:true, errorHandlingOption: 'stopOnFirstError') ~> sink1"
+            ]
+        }
+    }
+}

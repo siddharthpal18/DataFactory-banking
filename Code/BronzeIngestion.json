@@ -1,0 +1,34 @@
+{
+    "name": "BronzeIngestionActivities",
+    "properties": {
+        "activities": [
+            {
+                "name": "usersData",
+                "type": "Copy",
+                "description": "Ingests raw User CSV data into the Bronze container.",
+                "typeProperties": {
+                    "source": { "type": "DelimitedTextSource" },
+                    "sink": { "type": "DelimitedTextSink" }
+                }
+            },
+            {
+                "name": "TranscationsData",
+                "type": "Copy",
+                "description": "Ingests raw Transaction CSV data into the Bronze container.",
+                "typeProperties": {
+                    "source": { "type": "DelimitedTextSource" },
+                    "sink": { "type": "DelimitedTextSink" }
+                }
+            },
+            {
+                "name": "CardsData",
+                "type": "Copy",
+                "description": "Ingests raw Cards CSV data into the Bronze container.",
+                "typeProperties": {
+                    "source": { "type": "DelimitedTextSource" },
+                    "sink": { "type": "DelimitedTextSink" }
+                }
+            }
+        ]
+    }
+}

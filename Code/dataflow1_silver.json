@@ -1,0 +1,39 @@
+{
+    "name": "dataflow2",
+    "properties": {
+        "type": "MappingDataFlow",
+        "typeProperties": {
+            "sources": [
+                { "dataset": { "referenceName": "Userdata", "type": "DatasetReference" }, "name": "UsersDataSource" },
+                { "dataset": { "referenceName": "cardsDataa", "type": "DatasetReference" }, "name": "CardsDataSource" },
+                { "dataset": { "referenceName": "TranscData", "type": "DatasetReference" }, "name": "TranscationDataSource" }
+            ],
+            "sinks": [
+                { "dataset": { "referenceName": "CleanedUsersParquet", "type": "DatasetReference" }, "name": "SinkUsers" },
+                { "dataset": { "referenceName": "CleanedCardsParq", "type": "DatasetReference" }, "name": "SinkCards" },
+                { "dataset": { "referenceName": "CleanTranscationParq", "type": "DatasetReference" }, "name": "SinkTransc" }
+            ],
+            "transformations": [
+                { "name": "RemoveInvalidAge" }, { "name": "StandardizeUsers" },
+                { "name": "FilterCards" }, { "name": "StandardizeCards" },
+                { "name": "FilterTranscations" }, { "name": "RemoveInvalidDates" },
+                { "name": "derivedColumn" }
+            ],
+            "scriptLines": [
+                "source(output(id as string, current_age as string, gender as string, address as string)) ~> UsersDataSource",
+                "source(output(id as string, client_id as string, card_brand as string, card_type as string, credit_limit as string)) ~> CardsDataSource",
+                "source(output(id as string, date as string, client_id as string, card_id as string, amount as string, merchant_state as string, errors as string)) ~> TranscationDataSource",
+                "UsersDataSource filter(toInteger(current_age) <= 100 && toInteger(current_age) >= 18 && !isNull(id)) ~> RemoveInvalidAge",
+                "RemoveInvalidAge derive(gender = upper(gender), address = trim(address)) ~> StandardizeUsers",
+                "CardsDataSource filter(!isNull(id) && !isNull(client_id) && toInteger(credit_limit) > 0) ~> FilterCards",
+                "FilterCards derive(card_brand = upper(card_brand), card_type = upper(card_type), has_chip = iif(isNull(has_chip), 'False', has_chip)) ~> StandardizeCards",
+                "TranscationDataSource filter(toFloat(amount) >= 0 && !isNull(id) && !isNull(card_id)) ~> FilterTranscations",
+                "FilterTranscations filter(!isNull(date)) ~> RemoveInvalidDates",
+                "RemoveInvalidDates derive(errors = iif(isNull(errors), 'No Error', errors), merchant_state = iif(isNull(merchant_state), 'Online', merchant_state)) ~> derivedColumn",
+                "StandardizeUsers sink(format: 'parquet', skipDuplicateMapInputs: true, skipDuplicateMapOutputs: true) ~> SinkUsers",
+                "StandardizeCards sink(format: 'parquet', skipDuplicateMapInputs: true, skipDuplicateMapOutputs: true) ~> SinkCards",
+                "derivedColumn sink(format: 'parquet', skipDuplicateMapInputs: true, skipDuplicateMapOutputs: true) ~> SinkTransc"
+            ]
+        }
+    }
+}

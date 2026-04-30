@@ -1,0 +1,32 @@
+{
+    "name": "BankingDataPipeline",
+    "properties": {
+        "activities": [
+            { "name": "usersData", "type": "Copy", "typeProperties": { "source": { "type": "DelimitedTextSource" }, "sink": { "type": "DelimitedTextSink" } } },
+            { "name": "TranscationsData", "type": "Copy", "typeProperties": { "source": { "type": "DelimitedTextSource" }, "sink": { "type": "DelimitedTextSink" } } },
+            { "name": "CardsData", "type": "Copy", "typeProperties": { "source": { "type": "DelimitedTextSource" }, "sink": { "type": "DelimitedTextSink" } } },
+            {
+                "name": "Data flow",
+                "type": "ExecuteDataFlow",
+                "dependsOn": [
+                    { "activity": "usersData", "dependencyConditions": ["Succeeded"] },
+                    { "activity": "TranscationsData", "dependencyConditions": ["Succeeded"] },
+                    { "activity": "CardsData", "dependencyConditions": ["Succeeded"] }
+                ],
+                "typeProperties": {
+                    "dataflow": { "referenceName": "dataflow2", "type": "DataFlowReference" },
+                    "compute": { "coreCount": 8, "computeType": "General" }
+                }
+            },
+            {
+                "name": "DataFlow-merge-and-load",
+                "type": "ExecuteDataFlow",
+                "dependsOn": [ { "activity": "Data flow", "dependencyConditions": ["Succeeded"] } ],
+                "typeProperties": {
+                    "dataflow": { "referenceName": "dataflow3", "type": "DataFlowReference" },
+                    "compute": { "coreCount": 8, "computeType": "General" }
+                }
+            }
+        ]
+    }
+}
