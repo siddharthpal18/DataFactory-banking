@@ -75,3 +75,5 @@ How to Deploy
 4. Trigger: Execute the BankingDataPipeline to run the end-to-end flow.
 
 
+Contributors:
+@Siddharthpal
